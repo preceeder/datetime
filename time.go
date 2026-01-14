@@ -15,6 +15,14 @@ func Now(zone ...string) *DateTime {
 	return &DateTime{time: time.Now().In(loc), weekStartsAt: time.Monday, location: loc}
 }
 
+func (t *DateTime) FromTime(ti time.Time, zone ...string) *DateTime {
+	loc := t.location
+	if len(zone) > 0 {
+		loc = timeZoneHandler(zone...)
+	}
+	return &DateTime{time: ti.In(loc), weekStartsAt: t.weekStartsAt, location: loc}
+}
+
 func (t *DateTime) Now(zone ...string) *DateTime {
 	loc := t.location
 	if len(zone) > 0 {
